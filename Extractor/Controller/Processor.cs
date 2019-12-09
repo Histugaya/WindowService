@@ -46,13 +46,14 @@ namespace Extractor.Controller
             try
             {
                 string fileName = Path.GetFileName(sourceFile);
+                string newFileName = Path.GetFileNameWithoutExtension(sourceFile) + "-" + DateTime.Now.ToString("MM-dd-yyyy");
                 string fileExtension = Path.GetExtension(sourceFile);
-                string destinationFile = _destinationPath + fileName;
+                string destinationFile = _destinationPath + newFileName + fileExtension;
                 string backupFile = _backupPath + fileName;
                 if (File.Exists(sourceFile))
                 {
+                    File.Copy(sourceFile, backupFile);
                     File.Move(sourceFile, destinationFile);
-                    File.Move(sourceFile, backupFile);
                     File.Delete(sourceFile);
                 }
             }
